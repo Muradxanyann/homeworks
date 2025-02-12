@@ -36,13 +36,28 @@ class Program
             Console.WriteLine(($"{number} day is equal {weak} weak and {day} day "));
         }*/
         // Task 14:  Find the Type of Triangle
-        int side1 = Convert.ToInt32(Console.ReadLine());
+        /*int side1 = Convert.ToInt32(Console.ReadLine());
         int side2 = Convert.ToInt32(Console.ReadLine());
         int side3 = Convert.ToInt32(Console.ReadLine());
         if (side1 == side2 && side1 == side3)
             Console.WriteLine("This triangle is Equilateral");
         else if ((side1 == side2 && side1 != side3) || (side2 == side3 && side2 != side1)) 
             Console.WriteLine("This triangle is Isosceles ");
-        else Console.WriteLine("This triangle is Scalene");
+        else Console.WriteLine("This triangle is Scalene");*/
+        //TASK 15: Check Uppercase or Lowercase
+        /*char input = Convert.ToChar(Console.ReadKey());
+        if (char.IsUpper(input)) 
+            Console.WriteLine("Inputed char is upper case");
+        else Console.WriteLine("Inputed char is lower case");*/
+        // TASK 16: Find BMI (Body Mass Index)
+        /*int weight = Convert.ToInt32(Console.ReadLine());
+        double height = Convert.ToDouble(Console.ReadLine());
+        double bmi = Convert.ToDouble(weight / (height * height));
+        if (bmi < 18.5) Console.Write($"Your BMI is {bmi} and you have Underweight");
+        else if (bmi >= 18.5 && bmi <= 24.9) Console.Write($"Your BMI is {bmi} and you have Normal waight");
+        else if (bmi >= 25 && bmi <= 29.9) Console.Write($"Your BMI is {bmi} an you have Overweight");
+        else Console.Write("You have Obease");*/
+        // Task 17: Set or Clear the K-th Bit of a Number
+
     }
 }
