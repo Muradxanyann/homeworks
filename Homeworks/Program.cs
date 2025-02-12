@@ -85,7 +85,7 @@ class Program
         else Console.WriteLine($"the input is not starts and ends with {sym} ");*/
         /*------------------------------------------------------------*/
         //Task 19: Create a 2D Array and Fill It with Numbers
-        /*int[,] array = new int[3, 3];
+        int[,] array = new int[3, 3];
         Random rand = new Random();
         for (int i = 0; i < array.GetLength(0); i++)
         {
@@ -103,7 +103,7 @@ class Program
             }
 
             Console.WriteLine();
-        }*/
+        }
         /*------------------------------------------------------------*/
         //Task 20: Create a Jagged Array and Fill It with Numbers 
         int[][] array = new int[3][];
