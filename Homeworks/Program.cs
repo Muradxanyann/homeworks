@@ -80,7 +80,7 @@ class Program
         }*/
         /*------------------------------------------------------------*/
         //Task 5: Prime Number Checker
-        string input = Console.ReadLine();
+        /*string input = Console.ReadLine();
         int number;
         if (!int.TryParse(input, out number))
         {
@@ -96,9 +96,61 @@ class Program
                 break;
             } 
         }
-        Console.WriteLine($"The number {number} is prime");
+        Console.WriteLine($"The number {number} is prime");*/
+        /*------------------------------------------------------------*/
+        //Task 6: Collatz Conjecture
+        /*Console.WriteLine("Please input a number");
+        string input = Console.ReadLine();
+        int number, count = 0;
+        if (!int.TryParse(input, out number))
+        {
+            Console.WriteLine("Parsing failed!!!");
+            return;
+        }
         
+        while (number != 1)
+        {
+            count++;
+            if (number % 2 == 0) number /= 2;
+            else number = 3 * number + 1;
+        }
+
+        Console.WriteLine($"The loop was executed {count} times");*/
+        // Task 7: Number Pyramid
+        /*Console.WriteLine("Please input a number");
+        string input = Console.ReadLine();
+        int number, count = 0;
+        if (!int.TryParse(input, out number))
+        {
+            Console.WriteLine("Parsing failed!!!");
+            return;
+        }
+
+        for (int i = 0; i < number; i++)
+        {
+            for (int j = 0; j < i; j++)
+            {
+                Console.Write(i);
+            }
+
+            Console.WriteLine();
+        }*/
+        //Task 9: Finding the Longest Word in a Sentence
+        string sentence = Console.ReadLine();
+        int count = 0, maxCount = 0; 
         
+        for (int i = 0; i < sentence.Length; i++)
+        {
+            if (sentence[i] != ' ') count++;
+            else
+            {
+                maxCount = count > maxCount ? count : maxCount;
+                count = 0;
+            }
+        }
+
+        Console.WriteLine($"the Longest Word in a Sentence has  length {maxCount}");
+
 
     }
 }
