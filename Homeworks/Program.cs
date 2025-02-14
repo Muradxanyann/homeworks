@@ -136,21 +136,81 @@ class Program
             Console.WriteLine();
         }*/
         //Task 9: Finding the Longest Word in a Sentence
-        string sentence = Console.ReadLine();
-        int count = 0, maxCount = 0; 
+        /*string sentence = Console.ReadLine();
+        int count = 0, maxCount = 0, index = 0; 
         
         for (int i = 0; i < sentence.Length; i++)
         {
             if (sentence[i] != ' ') count++;
             else
             {
-                maxCount = count > maxCount ? count : maxCount;
+                if (count > maxCount)
+                {
+                    maxCount = count;
+                    index = i - maxCount;
+                }
                 count = 0;
             }
         }
 
-        Console.WriteLine($"the Longest Word in a Sentence has  length {maxCount}");
+        if (count > maxCount)
+        {
+            maxCount = count;
+            index = sentence.Length - maxCount;
+        }
+        
+        string sub = sentence.Substring(index, maxCount);
+        Console.WriteLine($"the Longest Word in a Sentence has  " +
+                          $"length {maxCount} and the longest Word is {sub}");*/
+        /*------------------------------------------------------------*/
+        // Task 10: Maze Solver (Grid Navigation)
+        char[,] map =
+        {
+            {'#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'},
+            {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
+            {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
+            {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
+            {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
+            {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
+            {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
+            {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
+            {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
+            {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
+            {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
+            {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
+            {'#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'}
+        };
+        char player = 'P';
+        int userX = 5, userY = 5;
+        Random rand = new Random();
+        map[userX, userY] = player;
+        map[rand.Next(9), rand.Next(9)] = 'X';
+        while (map[userX, userY] != 'X')
+        {
+            for (int i = 0; i < map.GetLength(0); i++)
+            {
+                for (int j = 0; j < map.GetLength(1); j++)
+                {
+                    Console.Write(map[i, j]);  
+                }
 
+                Console.WriteLine();
+            }
+
+            ConsoleKeyInfo charKey = Console.ReadKey();
+            switch (charKey.Key)
+            {
+                case ConsoleKey.UpArrow:
+                    break;
+                case ConsoleKey.DownArrow :
+                    break;
+                case ConsoleKey.LeftArrow:
+                    break;
+                case ConsoleKey.RightArrow:
+                    break;
+            }
+            
+        }
 
     }
 }
