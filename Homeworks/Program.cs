@@ -5,7 +5,7 @@ class Program
     static void Main()
     {
         //Task 1: Fibonacci Sequence Generator
-        /*Console.WriteLine("Please input a number");
+        Console.WriteLine("Please input a number");
         int first = 0, second = 1, temp = 0;
         string input = Console.ReadLine();
         int num;
@@ -22,10 +22,10 @@ class Program
             second += first;
             first = temp;
             Console.Write(second + ", ");
-        }*/
+        }
         /*------------------------------------------------------------*/
         //Task 2: Reverse a Number
-        /*Console.WriteLine("Please input a number");
+        Console.WriteLine("Please input a number");
         string input = Console.ReadLine();
         int reverse = 0;
         int number;
@@ -42,10 +42,10 @@ class Program
             number /= 10;
         }
 
-        Console.WriteLine($"The reversed version of number {originalNumber} is {reverse}");*/
+        Console.WriteLine($"The reversed version of number {originalNumber} is {reverse}");
         /*------------------------------------------------------------*/
         //Task 3: Sum of Digits
-        /*Console.WriteLine("Please input a number");
+        Console.WriteLine("Please input a number");
         string input = Console.ReadLine();
         int sum = 0;
         int number;
@@ -61,10 +61,10 @@ class Program
             number /= 10;
         }
 
-        Console.WriteLine($"The sum of digits in number {originalNumber} is {sum}");*/
+        Console.WriteLine($"The sum of digits in number {originalNumber} is {sum}");
         /*------------------------------------------------------------*/
         //Task 4: Multiplication Table
-        /*Console.WriteLine("Please input a number");
+        Console.WriteLine("Please input a number");
         string input = Console.ReadLine();
         int number;
         if (!int.TryParse(input, out number))
@@ -77,10 +77,10 @@ class Program
         for (int i = 1; i <= 10; i++)
         {
             Console.WriteLine($"{i} * {number} = {i * number}");
-        }*/
+        }
         /*------------------------------------------------------------*/
         //Task 5: Prime Number Checker
-        /*string input = Console.ReadLine();
+        string input = Console.ReadLine();
         int number;
         if (!int.TryParse(input, out number))
         {
@@ -96,10 +96,10 @@ class Program
                 break;
             } 
         }
-        Console.WriteLine($"The number {number} is prime");*/
+        Console.WriteLine($"The number {number} is prime");
         /*------------------------------------------------------------*/
         //Task 6: Collatz Conjecture
-        /*Console.WriteLine("Please input a number");
+        Console.WriteLine("Please input a number");
         string input = Console.ReadLine();
         int number, count = 0;
         if (!int.TryParse(input, out number))
@@ -115,9 +115,9 @@ class Program
             else number = 3 * number + 1;
         }
 
-        Console.WriteLine($"The loop was executed {count} times");*/
+        Console.WriteLine($"The loop was executed {count} times");
         // Task 7: Number Pyramid
-        /*Console.WriteLine("Please input a number");
+        Console.WriteLine("Please input a number");
         string input = Console.ReadLine();
         int number, count = 0;
         if (!int.TryParse(input, out number))
@@ -134,9 +134,9 @@ class Program
             }
 
             Console.WriteLine();
-        }*/
+        }
         //Task 9: Finding the Longest Word in a Sentence
-        /*string sentence = Console.ReadLine();
+        string sentence = Console.ReadLine();
         int count = 0, maxCount = 0, index = 0; 
         
         for (int i = 0; i < sentence.Length; i++)
@@ -161,7 +161,7 @@ class Program
         
         string sub = sentence.Substring(index, maxCount);
         Console.WriteLine($"the Longest Word in a Sentence has  " +
-                          $"length {maxCount} and the longest Word is {sub}");*/
+                          $"length {maxCount} and the longest Word is {sub}");
         /*------------------------------------------------------------*/
         // Task 10: Maze Solver (Grid Navigation)
         char[,] map =
@@ -183,10 +183,10 @@ class Program
         char player = 'P';
         int userX = 5, userY = 5;
         Random rand = new Random();
-        map[userX, userY] = player;
-        map[rand.Next(9), rand.Next(9)] = 'X';
+        map[rand.Next(1,map.GetLength(0) - 1), rand.Next(1,map.GetLength(1) - 1)] = 'X';
         while (map[userX, userY] != 'X')
         {
+            
             for (int i = 0; i < map.GetLength(0); i++)
             {
                 for (int j = 0; j < map.GetLength(1); j++)
@@ -196,21 +196,42 @@ class Program
 
                 Console.WriteLine();
             }
+            Console.SetCursorPosition(userY, userX);
+            Console.Write('P');
 
             ConsoleKeyInfo charKey = Console.ReadKey();
             switch (charKey.Key)
             {
                 case ConsoleKey.UpArrow:
+                    if (map[userX - 1, userY] != '#')
+                    {
+                        userX--;
+                    } 
                     break;
                 case ConsoleKey.DownArrow :
+                    if (map[userX + 1 , userY] != '#')
+                    {
+                        userX++;
+                    } 
                     break;
                 case ConsoleKey.LeftArrow:
+                    if (map[userX, userY - 1] != '#')
+                    {
+                        userY--;
+                    } 
                     break;
                 case ConsoleKey.RightArrow:
+                    if (map[userX, userY + 1] != '#')
+                    {
+                        userY++;
+                    } 
                     break;
             }
+            Console.Clear();
             
         }
+
+        Console.WriteLine("Congratulation you found X");
 
     }
 }
