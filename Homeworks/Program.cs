@@ -7,7 +7,7 @@ using System.Reflection.Metadata;
     A Main() method where the user can create 3 contacts and display them.
     Store contacts in an array and allow searching by name.
     #1#*/
-/*public class Contact
+public class Contact
 {
     public string Name;
     public string PhoneNumber;
@@ -56,14 +56,14 @@ class Program
             
         }
     }
-}*/
-/*--------------------------------------------------------------------------------------------------------
+}
+/*--------------------------------------------------------------------------------------------------------*/
 //Task 2: Student Management
 /*Task: Create a Student class with:
     Name, Age, and Grade properties.
     A DisplayDetails() method.
     In Main(), create 5 students, store them in an array, and display their details.*/
-     /*public class Student
+     public class Student
      {
          private string Name;
          private int Age;
@@ -100,7 +100,8 @@ class Program
                  Console.WriteLine();
              }
          }
-     }*/
+     }
+/*--------------------------------------------------------------------------------------------------------*/
      //Task 3: Bank Account
      /*Task: Create a BankAccount class with:
          AccountNumber, HolderName, Balance.
@@ -148,3 +149,66 @@ class Program
              user.Withdraw(120);
          }
      }
+/*--------------------------------------------------------------------------------------------------------*/
+     //Task 4: Book Library
+     /*Task: Create a Book class with:
+         Title, Author, IsAvailable properties.
+         A method BorrowBook() that sets IsAvailable = false.
+         A method ReturnBook() that sets IsAvailable = true.
+         In Main(), create 3 books, borrow one, and display availability status.
+         Allow user interaction (choose which book to borrow/return).*/
+     public class Book
+     {
+         private string Title;
+         private string Author;
+         private bool IsAvailable;
+
+         public Book(string title, string author, bool Available)
+         {
+             this.Title = title;
+             this.Author = author;
+             this.IsAvailable = Available;
+         }
+
+         public bool isAvailable(string title)
+         {
+             if (this.Title.ToLower() == title.ToLower() && this.IsAvailable != false)
+             {
+                 this.IsAvailable = false;
+                 Console.WriteLine("Enjoy your book, you have 15 days to read :)");
+                 return true;
+             }
+
+             Console.WriteLine("This book isn`t available!!!");
+                 return false;
+         }
+
+         public void ReturnBook(string title)
+         {
+             this.IsAvailable = true;
+             Console.WriteLine("We hope that it was the right book for you:)");
+             return;
+         }
+     }
+
+     public class Program
+     {
+         static void Main(string[] args)
+         {
+             Book[] books = new Book[3]
+             {
+                 new Book("The Great Gatsby", "F. Scott Fitzgerald", true),
+                 new Book("One Indian Girl", "Chetan Bhagat", false ),
+                 new Book("A Million Mutinies Now", "V.S. Naipaul", true),
+             };
+             Console.WriteLine("Hi dear, which book do you prefer to borrow");
+             string input = Console.ReadLine();
+             foreach (var book in books)
+             {
+                 if (book.isAvailable(input) == true)
+                 {
+                     return;
+                 }
+             }
+         }
+     } 
