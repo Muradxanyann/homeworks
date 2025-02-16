@@ -2,12 +2,13 @@
 using System.Reflection.Metadata;
 using System.Threading.Channels;
 
-/*Create a Contact class with:
+/*
+Create a Contact class with:
     Name, PhoneNumber, and Email properties.
     A method DisplayInfo() to print contact details.
     A Main() method where the user can create 3 contacts and display them.
-    Store contacts in an array and allow searching by name.
-    #2##1#
+    Store contacts in an array and allow searching by name.*/
+    
 public class Contact
 {
     public string Name;
@@ -58,12 +59,12 @@ class Program
         }
     }
 }
-/*--------------------------------------------------------------------------------------------------------#1#
+/*--------------------------------------------------------------------------------------------------------*/
 //Task 2: Student Management
 /*Task: Create a Student class with:
     Name, Age, and Grade properties.
     A DisplayDetails() method.
-    In Main(), create 5 students, store them in an array, and display their details.#1#
+    In Main(), create 5 students, store them in an array, and display their details.*/
      public class Student
      {
          private string Name;
@@ -102,13 +103,13 @@ class Program
              }
          }
      }
-/*--------------------------------------------------------------------------------------------------------#1#
+/*--------------------------------------------------------------------------------------------------------*/
      //Task 3: Bank Account
      /*Task: Create a BankAccount class with:
          AccountNumber, HolderName, Balance.
          Methods Deposit(amount) and Withdraw(amount), ensuring balance never goes negative.
          In Main(), allow the user to create an account and perform deposits/withdrawals.
-         Prevent withdrawal if insufficient funds and show an error message.#1#
+         Prevent withdrawal if insufficient funds and show an error message.*/
      public class BankAccount
      {
          private int AccountNumber;
@@ -150,14 +151,14 @@ class Program
              user.Withdraw(120);
          }
      }
-/*--------------------------------------------------------------------------------------------------------#1#
+/*--------------------------------------------------------------------------------------------------------*/
      //Task 4: Book Library
      /*Task: Create a Book class with:
          Title, Author, IsAvailable properties.
          A method BorrowBook() that sets IsAvailable = false.
          A method ReturnBook() that sets IsAvailable = true.
          In Main(), create 3 books, borrow one, and display availability status.
-         Allow user interaction (choose which book to borrow/return).#1#
+         Allow user interaction (choose which book to borrow/return).*/
      public class Book
      {
          private string Title;
@@ -213,7 +214,7 @@ class Program
              }
          }
      } 
-     /*--------------------------------------------------------------------------------------------------------#1#*/
+     /*--------------------------------------------------------------------------------------------------------*/
      //Task 5: Online Shopping Cart
      /*Task: Create a Product class with:
          Name, Price, and Quantity.
@@ -221,9 +222,9 @@ class Program
          In Main(), allow the user to add multiple products to a shopping cart and calculate the total cost.
          If more than 5 items are purchased, apply a 10% discount.*/
 
-     /*public class Product
+     public class Product
      {
-         /* Es xndri vra shat em xorace, heto hisha piti stugvie :)#1#
+         /* Es xndri vra shat em xorace, heto hisha piti stugvie :)*/
          public string Name;
          public double Price;
          private int Quantity;
@@ -308,7 +309,7 @@ class Program
                  }
              }
          }
-     }*/
+     }
      /*--------------------------------------------------------------------------------------------------------*/
      // Task 6: Employee Payroll System
      /*Task: Create an Employee class with:
@@ -316,7 +317,7 @@ class Program
          A method CalculateSalary() that returns SalaryPerHour * HoursWorked.
          In Main(), create 3 employees, calculate their salaries, and display them.
          If an employee works over 40 hours, pay overtime (1.5x rate)*/
-     /*public class Payroll
+     public class Payroll
      {
          public string Name;
          private double SalaryPerHour;
@@ -358,7 +359,7 @@ class Program
                  else Console.WriteLine($"Worker {payrolls[i].Name} salary:{salary}$");
              }
          }
-     }*/
+     }
 /*--------------------------------------------------------------------------------------------------------*/
      //Task 7: Ticket Booking System
      /*Task: Create a MovieTicket class with:
@@ -366,7 +367,7 @@ class Program
          A method BookTicket() that marks it as booked.
          In Main(), create 5 seats, allow the user to book one, and prevent double booking.
          Show all available seats before booking*/
-     /*public class MovieTicket
+     public class MovieTicket
      {
          private string MovieName;
          public int SeatNumber;
@@ -424,7 +425,6 @@ class Program
          }
      }
      /*--------------------------------------------------------------------------------------------------------* /
-     */
      //Task 8: School System
      /*Task: Create a School Management System with:
         Student class (Name, Age, Grade).
@@ -432,7 +432,7 @@ class Program
          School class that stores students & teachers in an array.
          Show students with the highest grade and teachers with less than 2 years experience.
          */
-     /*public class Student
+     public class Student
      {
          public string Name;
          public int Age;
@@ -489,7 +489,7 @@ class Program
                  if (i.YearsOfExperience < 2 ) Console.WriteLine($"{i.Name} - {i.YearsOfExperience}");
              }
          }
-     }*/
+     }
      /*--------------------------------------------------------------------------------------------------------*/
      //Task 9: Car Rental System
      /*Task: Create a Car class with:
@@ -522,6 +522,7 @@ class Program
              this.IsRented = true;
              return true;
          }
+         
          public bool ReturnCar()
          {
              this.IsRented = false;
@@ -547,6 +548,7 @@ class Program
                  Console.WriteLine("input the model:");
                  string input = Console.ReadLine();
                  bool carFound = false;
+                 
                  foreach (var car in cars)
                  {
                      if (car.Model.Equals(input, StringComparison.OrdinalIgnoreCase))
@@ -564,6 +566,7 @@ class Program
                  {
                      Console.WriteLine("We don't have this model.");
                  }
+                 
                  Console.WriteLine("Would you like to borrow another one: '1' - yes, '0' - no");
                  int userAnswer = Convert.ToInt32(Console.ReadLine());
                  if (userAnswer <= 0 || userAnswer > 1) break;
