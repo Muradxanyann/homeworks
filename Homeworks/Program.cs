@@ -1,576 +1,380 @@
 ﻿using System;
-using System.Reflection.Metadata;
-using System.Threading.Channels;
 
-/*
-Create a Contact class with:
-    Name, PhoneNumber, and Email properties.
-    A method DisplayInfo() to print contact details.
-    A Main() method where the user can create 3 contacts and display them.
-    Store contacts in an array and allow searching by name.*/
-    
-public class Contact
+//Task 1: Student Management System
+/*Task: Create a class Student with:
+Fields: name, studentID, and gradeLevel.
+    Add a method ShowStudentInfo() to display the details.
+    In Main(), create a few Student objects and display their details.*/
+class Student
 {
-    public string Name;
-    public string PhoneNumber;
-    public string Email;
+    public string Name { get; set; }
+    public int StudentId { get; }
+    public int GradeLevel { get; private set; }
 
-    public Contact(string name, string phoneNumber, string email )
+    public Student(string name, int studentId, int gradeLevel)
     {
-        this.Name = name;
-        this.PhoneNumber = phoneNumber;
-        this.Email = email;
+        this.Name= name;
+        this.StudentId = studentId;
+        this.GradeLevel = gradeLevel;
     }
 
-     public  void DisplayInfo()
+    public void ShowStudentInfo()
     {
-        Console.WriteLine($"Hello {Name}\nYour number: {PhoneNumber}\nYour email: {Email}");
+        Console.WriteLine($"Name: {Name}\nStudent ID: {StudentId}\nGrade Level: {GradeLevel}\n");
     }
-    
 }
+
+class Programm
+{
+    static void Main(string[] args)
+    {
+        Student[] students = new Student[]
+        {
+            new Student("Armen", 1, 1),
+            new Student("Artak", 2, 2),
+            new Student("Karen", 3, 7),
+            new Student("Serj", 4, 9),
+        };
+        foreach (var student in students)
+        {
+            student.ShowStudentInfo();
+        }
+        
+    }
+}
+/*-------------------------------------------------------------------------------------------------------*/
+
+//Task 2: Flight Reservation System
+/*Task: Create a class FlightTicket with:
+Fields: passengerName, flightNumber, and seatNumber.
+    Add a constructor to initialize these fields.
+    In Main(), create a few tickets and print the details.*/
+    
+class FlightTicket
+{
+    public string PassengerName { get; set; }
+    public int FlightNumber { get; private set; }
+    public int SeatNumber { get; private set; }
+
+
+    public FlightTicket(string passengerName, int flightNumber, int seatNumber)
+    {
+        PassengerName = passengerName;
+        FlightNumber = flightNumber;
+        SeatNumber = seatNumber;
+    }
+
+    public void TicketDetail()
+    {
+        Console.WriteLine($"Passenger Name: {PassengerName}\nFlight Number: {FlightNumber}\nSeatNumber: {SeatNumber}");
+        Console.WriteLine(new string('-', 30));
+    }
+}
+
 class Program
 {
-    static void Main()
+    static void Main(string[] args)
     {
-        Contact[] contactArray = new Contact[3]
+        FlightTicket[] tickets = 
         {
-            new Contact("Gor", "+37411223344", "gor.email@gmail.com"),
-            new Contact("Armen", "+37411556677", "armen.email@gmail.com"),
-            new Contact("Karen", "+37411889900", "karen.email@gmail.com")
+            new FlightTicket("Tom", 111, 1),
+            new FlightTicket("Jerry", 112, 2),
+            new FlightTicket("Rick", 113, 3),
         };
-        foreach (var contact in contactArray)
+        foreach (var ticket in tickets)
         {
-            contact.DisplayInfo();
-        }
-
-        Console.WriteLine("Input name to search:");
-        string input = Console.ReadLine();
-        foreach (var contact in contactArray)
-        {
-            if (contact.Name.ToLower() == input.ToLower())
-            {
-                Console.WriteLine($"The name was found!!!\n{contact.Name}`s phone number is: {contact.PhoneNumber}\n" +
-                                  $"And email: {contact.Email}");
-                return;
-            }
-            
-        Console.WriteLine($"The {input} is not found in your contacts!!!");
-            
+            ticket.TicketDetail();
         }
     }
+    
 }
-/*--------------------------------------------------------------------------------------------------------*/
-//Task 2: Student Management
-/*Task: Create a Student class with:
-    Name, Age, and Grade properties.
-    A DisplayDetails() method.
-    In Main(), create 5 students, store them in an array, and display their details.*/
-     public class Student
-     {
-         private string Name;
-         private int Age;
-         private double GradeProperties;
+/*-------------------------------------------------------------------------------------------------------*/
+//Task 3: File Download Simulation
+/*Task: Create a class FileDownload with:
+Constructor that prints "Download started".
+    Add a destructor that prints "Download completed".
+    In Main(), create an object inside a method and observe when the destructor is called.*/
+    
+class FileDownload
+{
+    public FileDownload()
+    {
+        Console.WriteLine("Download started");
+    }
+    
+    ~FileDownload(){
+        Console.WriteLine("Download completed");
+    }
+}
 
-         public Student(string name, int age, double properties)
-         {
-             this.Name = name;
-             this.Age = age;
-             this.GradeProperties = properties;
-         }
+class Program
+{
+    static void CreateAndDestroy()
+    {
+        FileDownload file = new FileDownload();
+    }
 
-         public void DisplayDetails()
-         {
-             Console.WriteLine($"Name: {Name}\nAge: {Age}\nGrade Proparties: {GradeProperties}");
-         }
-     }
-     class Program{
-         static void Main(string[] args)
-         {
-             Student[] students = new Student[5]
-             {
-                 new Student("Armen", 20, 9.1),
-                 new Student("Sona", 21, 8.5),
-                 new Student("Karine", 22, 7.8),
-                 new Student("Emma", 23, 8.9),
-                 new Student("Levon", 19, 9.5)
-             };
-             int count = 1;
-             foreach (var i in students)
-             {
-                 Console.WriteLine($"Student {count++} Info");
-                 i.DisplayDetails();
-                 Console.WriteLine();
-             }
-         }
-     }
-/*--------------------------------------------------------------------------------------------------------*/
-     //Task 3: Bank Account
-     /*Task: Create a BankAccount class with:
-         AccountNumber, HolderName, Balance.
-         Methods Deposit(amount) and Withdraw(amount), ensuring balance never goes negative.
-         In Main(), allow the user to create an account and perform deposits/withdrawals.
-         Prevent withdrawal if insufficient funds and show an error message.*/
-     public class BankAccount
-     {
-         private int AccountNumber;
-         private string HolderName;
-         private double Balance;
+    static void Main(string[] args)
+    {
+        CreateAndDestroy();
+    }
+}
+/*-------------------------------------------------------------------------------------------------------*/
+//Task 4: Weather Forecast System
+    /*  Task: Create a class WeatherReport with:
+    Fields: temperature, humidity, and weatherCondition.
+    In Main(), create an array of WeatherReport objects for different cities and display the reports.*/
 
-         public BankAccount(int accountNumber, string holderName, double balance = 0)
-         {
-             this.AccountNumber = AccountNumber;
-             this.HolderName = holderName;
-             this.Balance = balance;
-         }
-         public void Deposit(double deposit)
-         {
-             this.Balance += deposit;
-             Console.WriteLine($"Credit Aproved!!!\n Your balance: {Balance}$ ");
-         }
+    class WeatherReport
+    {
+        public double Temperature { get;  set; }
+        public int Humidity { get;  set; }
+        public string WeatherCondition { get;  set; }
 
-         public void Withdraw(double withdraw)
-         {
-             if (this.Balance - withdraw < 0)
-             {
-                 Console.WriteLine($"Operation failed, your balance is not enough, Your balance: {Balance}");
-                 return;
-             }
+        public void WeatherInfo()
+        {
+            Console.WriteLine($"Tempriture: {Temperature}\nHumidity: {Humidity}\nWeatherCondition: {WeatherCondition}");
+            Console.WriteLine(new string('-', 30));
+        }
+    }
 
-             this.Balance -= withdraw;
-             Console.WriteLine($"Purchase Aproved!!!\n Your balance: {Balance}$ ");
-             
-         }
-     }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            WeatherReport[] London =
+            {
+                new WeatherReport { Temperature = 15.5, Humidity = 70, WeatherCondition = "Cloudy" },
+                new WeatherReport { Temperature = 22.3, Humidity = 60, WeatherCondition = "Sunny" },
+                new WeatherReport { Temperature = 10.8, Humidity = 80, WeatherCondition = "Rainy" }
+            };
+            foreach (var weather in London)
+            {
+                weather.WeatherInfo();
+            }
+           
+        }    
+    }
+/*-------------------------------------------------------------------------------------------------------*/
+//Task 5: Smartwatch Step Counter
+    /*Task: Create a class Smartwatch with:
+    Fields: ownerName and stepCount.
+        Add methods AddSteps(int steps) and ShowSteps().
+        In Main(), create a smartwatch object, simulate adding steps, and display the total..*/
 
-     class Program
-     {
-         static void Main(string[] args)
-         {
-             BankAccount user = new BankAccount(1, "someName", 100);
-             user.Deposit(10);
-             user.Withdraw(120);
-         }
-     }
-/*--------------------------------------------------------------------------------------------------------*/
-     //Task 4: Book Library
-     /*Task: Create a Book class with:
-         Title, Author, IsAvailable properties.
-         A method BorrowBook() that sets IsAvailable = false.
-         A method ReturnBook() that sets IsAvailable = true.
-         In Main(), create 3 books, borrow one, and display availability status.
-         Allow user interaction (choose which book to borrow/return).*/
-     public class Book
-     {
-         private string Title;
-         private string Author;
-         private bool IsAvailable;
+    using System.Net.NetworkInformation;
 
-         public Book(string title, string author, bool Available)
-         {
-             this.Title = title;
-             this.Author = author;
-             this.IsAvailable = Available;
-         }
+    class Smartwatch
+    {
+        public string OwnerName { get; set; }
+        public int StepCount { get;  set; }
 
-         public bool isAvailable(string title)
-         {
-             if (this.Title.ToLower() == title.ToLower() && this.IsAvailable != false)
-             {
-                 this.IsAvailable = false;
-                 Console.WriteLine("Enjoy your book, you have 15 days to read :)");
-                 return true;
-             }
+        public void AddSteps(int steps)
+        {
+            StepCount += steps;
+        }
 
-             Console.WriteLine("This book isn`t available!!!");
-                 return false;
-         }
+        public void ShowSteps()
+        {
+            Console.WriteLine($"Steps: {StepCount}");    
+        }
+    }
 
-         public void ReturnBook(string title)
-         {
-             this.IsAvailable = true;
-             Console.WriteLine("We hope that it was the right book for you:)");
-             return;
-         }
-     }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Smartwatch person1 = new Smartwatch();
+            //person1.AddSteps(100);
+            person1.ShowSteps();
+        }
+    }
+/*-------------------------------------------------------------------------------------------------------*/
+    //Task 6: Movie Rating System
+    /*Task: Create a class Movie with:
+    Private field _rating.
+        Add a property Rating that:
+    Allows setting a value between 1 and 5.
+        Prints a warning if an invalid value is entered.
+        In Main(), test the property with valid and invalid values.*/
 
-     public class Program
-     {
-         static void Main(string[] args)
-         {
-             Book[] books = new Book[3]
-             {
-                 new Book("The Great Gatsby", "F. Scott Fitzgerald", true),
-                 new Book("One Indian Girl", "Chetan Bhagat", false ),
-                 new Book("A Million Mutinies Now", "V.S. Naipaul", true),
-             };
-             Console.WriteLine("Hi dear, which book do you prefer to borrow");
-             string input = Console.ReadLine();
-             foreach (var book in books)
-             {
-                 if (book.isAvailable(input) == true)
-                 {
-                     return;
-                 }
-             }
-         }
-     } 
-     /*--------------------------------------------------------------------------------------------------------*/
-     //Task 5: Online Shopping Cart
-     /*Task: Create a Product class with:
-         Name, Price, and Quantity.
-         A method TotalPrice() that returns Price * Quantity.
-         In Main(), allow the user to add multiple products to a shopping cart and calculate the total cost.
-         If more than 5 items are purchased, apply a 10% discount.*/
+    class Movie
+    {
+        private int _rating;
 
-     public class Product
-     {
-         /* Es xndri vra shat em xorace, heto hisha piti stugvie :)*/
-         public string Name;
-         public double Price;
-         private int Quantity;
+        public int Rating
+        {
+            get { return _rating; }
+            set
+            {
+                if (value < 1 || value > 5)
+                {
+                    Console.WriteLine("Invalid rating, choose from 1 to 5");
+                    return;
+                }
+                _rating = value;
+            }
+        }
 
-         public double TotalPrice()
-         {
-             if (this.Quantity == 0)
-             {
-                 Console.WriteLine("Your product bag is empty!!!");
-                 return 0;
-             }
-             return Price * Quantity;
-         } 
-     }
+        public Movie(int rating)
+        {
+            Rating = rating;
+        }
 
-     public class Program
-     {
-         static void Main(string[] args)
-         {
-             Console.WriteLine("Welcome to our grocery, here are our product list:");
-             Product[] products = new Product[5]
-             {
-                 new Product { Name = "Apple", Price = 1.2 },
-                 new Product { Name = "Banana", Price = 0.8 },
-                 new Product { Name = "Milk", Price = 2.5 },
-                 new Product { Name = "Bread", Price = 1.5 },
-                 new Product { Name = "Eggs", Price = 3.0 }
-             };
-             foreach (var product in products)
-             {
-                 Console.WriteLine($"{product.Name} - {product.Price}$");
-             }
-             
-             
-              const int bagSize = 10;
-              int choosenProducts = 0;
-              double totalSum = 0;
-             Console.WriteLine("The size of your bag is 10");
-             Product[] productsBag = new Product[10];
-             for (int i = 0; i < productsBag.Length; i++)
-             {
-                 Console.WriteLine("Please, select the product");
-                 string input = Console.ReadLine();
-                 bool found = false;
-                 foreach (var product in products)
-                 {
-                     if (product.Name.Equals(input, StringComparison.OrdinalIgnoreCase)) // es funkcian gpt -ic em verce
-                     {
-                         Console.WriteLine($"Product '{input}' is available.");
-                         totalSum += product.Price;
-                         found = true;
-                         if (choosenProducts < bagSize) choosenProducts++;
-                         else
-                         {
-                             Console.WriteLine("Your bag is full");
-                             return;
-                         }
-                         break;
-                     }
-                 }
+        public void ShowRating()
+        {
+            Console.WriteLine($"Rating: {Rating}");
+        }
+    }
 
-                 if (found)
-                 {
-                     Console.WriteLine($"The product has been added in your shoping bag, " +
-                                       $"you can add {bagSize - choosenProducts} more products");
-                     Console.WriteLine("If you want to continue shoping enter '+' else(chekout) '-'");
-                     char userAnswer = Convert.ToChar(Console.ReadLine());
-                     if (userAnswer == '-')
-                     {
-                         //Chekout
-                         if (choosenProducts > 5)
-                         {
-                             Console.WriteLine($"Total sum: {totalSum - totalSum / 10}$");    
-                         }
-                         Console.WriteLine($"Total sum: {totalSum}$");
-                         return;
-                     };
-                 }
-                 else
-                 {
-                     Console.WriteLine("Product not found.");
-                 }
-             }
-         }
-     }
-     /*--------------------------------------------------------------------------------------------------------*/
-     // Task 6: Employee Payroll System
-     /*Task: Create an Employee class with:
-         Name, Position, SalaryPerHour, and HoursWorked.
-         A method CalculateSalary() that returns SalaryPerHour * HoursWorked.
-         In Main(), create 3 employees, calculate their salaries, and display them.
-         If an employee works over 40 hours, pay overtime (1.5x rate)*/
-     public class Payroll
-     {
-         public string Name;
-         private double SalaryPerHour;
-         public int HouseWorked;
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Movie movie1 = new Movie(7);
+            Movie movie2 = new Movie(3);
+            movie1.ShowRating();
+            movie2.ShowRating();
+        }
+    }
+/*-------------------------------------------------------------------------------------------------------*/
 
-         public Payroll(string name, double salaryPerHour, int houseWorked )
-         {
-             this.Name = name;
-             this.SalaryPerHour = salaryPerHour;
-             this.HouseWorked = houseWorked;
-         }
+    //Task 7: Fitness Tracker System
+    /*Task: Create a class WorkoutSession with:
+    Fields: exerciseType and durationInMinutes.
+        Add a method ShowWorkoutDetails().
+        In Main(), create and display different workout sessions.*/
 
-         public double CalculateSalary()
-         {
-             if (HouseWorked == 0)
-             {
-                 Console.WriteLine("Shut er petq mtacel...");
-                 return 0;
-             }
-             return HouseWorked * SalaryPerHour;
-         }
-     }
+    class WorkoutSession
+    {
+        public string ExerciseType{get; set;}
+        public int DurationInMinutes{get; set;}
 
-     public class Program
-     {
-         static void Main(string[] args)
-         {
-             Payroll[] payrolls = new Payroll[]
-             {
-                 new Payroll ("Worker1", 10, 8),
-                 new Payroll ("Worker2 ", 8, 6),
-                 new Payroll ("Worker3 ", 15, 7)
-             };
-             for (int i = 0; i < payrolls.Length; i++)
-             {
-                 double salary = 0;
-                 salary = payrolls[i].CalculateSalary();
-                 if (payrolls[i].HouseWorked * 5 > 40) Console.WriteLine($"Worker {payrolls[i].Name} salary with bonuses{salary * 1,5}$");
-                 else Console.WriteLine($"Worker {payrolls[i].Name} salary:{salary}$");
-             }
-         }
-     }
-/*--------------------------------------------------------------------------------------------------------*/
-     //Task 7: Ticket Booking System
-     /*Task: Create a MovieTicket class with:
-         MovieName, SeatNumber, IsBooked.
-         A method BookTicket() that marks it as booked.
-         In Main(), create 5 seats, allow the user to book one, and prevent double booking.
-         Show all available seats before booking*/
-     public class MovieTicket
-     {
-         private string MovieName;
-         public int SeatNumber;
-         public bool IsBooked;
+        public WorkoutSession(string exerciseType, int durationInMinutes)
+        {
+            ExerciseType = exerciseType;
+            DurationInMinutes = durationInMinutes;
+        }
 
-         public MovieTicket(string movieName, int seatNumber, bool isBooked = false)
-         {
-             this.MovieName = movieName;
-             this.SeatNumber = seatNumber;
-             this.IsBooked = isBooked;
-         }
+        public void ShowWorkoutDetails()
+        {
+            Console.WriteLine($"Exercise Type : {ExerciseType}\nDurition: {DurationInMinutes} minutes\n");
+        }
+    }
 
-         public bool BookTicket(int seatNumber)
-         {
-             if (seatNumber == 0 || seatNumber > 5) return false;
-             this.IsBooked = true;
-             return true;
-         }
-     }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            WorkoutSession[] sessions =
+            {
+                new WorkoutSession("Bench press", 10),
+                new WorkoutSession("Biceps curl", 10),
+            };
+            foreach (var sesion in sessions)
+            {
+                sesion.ShowWorkoutDetails();
+            }
+        }
+    }
+    /*-------------------------------------------------------------------------------------------------------*/
+    //Task 8: E-Commerce Product System
+    /*Task: Create a class Product with:
+    Fields name, price, and stockQuantity.
+        Add a constructor that uses this to differentiate between parameters and fields.
+        In Main(), create a product and display its details.*/
 
-     public class Programm
-     {
-         static void Main(string[] args)
-         {
-             string movie = "Game of Thrones";
-             MovieTicket[] bookingSystem = new MovieTicket[5];
-             for (int i = 0; i < bookingSystem.Length; i++)
-             {
-                 bookingSystem[i] = new MovieTicket(movie, i + 1);
-             }
+    class Product
+    {
+        private int _stockQuatity;
+        public string Name { get; set; }
+        public double Price { get; set; }
 
-             while (true)
-             {
-                 // Tpum enq azat texery
-                 Console.WriteLine("Available sets");
-                 for (int i = 0; i < bookingSystem.Length; i++)
-                 {
-                     if (bookingSystem[i].IsBooked == false) Console.WriteLine($"The seet {i + 1} is available");
-                 }
+        public int StockQuantity
+        {
+            get { return _stockQuatity; }
+            set
+            {
+                if (value < 0)
+                {
+                    Console.WriteLine("In stock value can`t be negative, using default value 0");
+                    this._stockQuatity = 0;
+                    return;
+                }
+                _stockQuatity = value;
+            }
+        }
 
-                 //Booking proccess
-                 Console.WriteLine("Which seat do you want to book");
-                 int choice = Convert.ToInt32(Console.ReadLine());
-                 if (choice >= 1 && choice <= bookingSystem.Length)
-                 {
-                     bookingSystem[choice - 1].BookTicket(choice);
-                     Console.WriteLine($"Seat {choice} is booked: Input '+' to book another one, Or '0' to quit");
-                     char key = Convert.ToChar(Console.ReadLine());
-                     if (key == '0') break;
+        public Product(string name, double price, int stockQuantity)
+        {
+            this.Name = name;
+            this.Price = price;
+            this.StockQuantity = stockQuantity;
+        }
 
-                 }
+        public void ShowDetails()
+        {
+            Console.WriteLine($"Product name: {Name}\nPrice: {Price}\nIn stock: {StockQuantity}");
+            Console.WriteLine(new string('-', 30));
+        }
+    }
 
-             }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Product product1 = new Product("Potato", 200, 10);
+            Product product2 = new Product("Orange", 200, -12);
+            product1.ShowDetails();
+            product2.ShowDetails();
+        }
+    }
+    /*-------------------------------------------------------------------------------------------------------*/
+    //Task 9: Game Character System
+    /*Task: Create a partial class.
+    Create a partial class Character in two separate files:
+    One part contains fields characterName and level.
+        The other contains a method ShowCharacterInfo().
+        In Main(), create a Character object and call ShowCharacterInfo().*/
+    /*-------------------------------------------------------------------------------------------------------*/
+    //Task 10: Simulating Course Enrollment
+    /*Task: Create a class Course with:
+    Fields: courseName, instructor, and maxStudents.
+        Use a constructor to initialize these fields.
+        Add a method ShowCourseDetails().
+        In Main(), create a few courses and display their details.*/
 
-         }
-     }
-     /*--------------------------------------------------------------------------------------------------------* /
-     //Task 8: School System
-     /*Task: Create a School Management System with:
-        Student class (Name, Age, Grade).
-         Teacher class (Name, Subject, YearsOfExperience).
-         School class that stores students & teachers in an array.
-         Show students with the highest grade and teachers with less than 2 years experience.
-         */
-     public class Student
-     {
-         public string Name;
-         public int Age;
-         public double Grade;
+    enum Teachers
+    {
+        Ms_Grigorian = 1,
+        Mr_Smith,
+        Mr_Hakobian
+    }
+    class Course
+    {
+        public string CourseName { get; set; }
+        public Teachers MyTeachers { get; set; }
+        public int MaxStudents { get; set; }
 
-         public Student(string name, int age, double grade)
-         {
-             this.Name = name;
-             this.Age = age;
-             this.Grade = grade;
-         }
-     }
+        public Course(string courseName, Teachers myTeachers/*1 - 3 only*/, int maxStudents)
+        {
+            CourseName = courseName;
+            MyTeachers = myTeachers;
+            MaxStudents = maxStudents;
+        }
 
-     public class Teacher
-     {
-         public string Name;
-         public string Subject;
-         public int YearsOfExperience;
+        public void ShowCourseDetails()
+        {
+            Console.WriteLine($"Course name: {CourseName}\nTeacher: {MyTeachers}\nMax Students: {MaxStudents}");
+            Console.WriteLine(new string('-', 30));
+        }
+    }
 
-         public Teacher(string name, string subject, int years)
-         {
-             this.Name = name;
-             this.Subject = subject;
-             this.YearsOfExperience = years;
-         }
-     }
-
-     public class School
-     {
-         static void Main(string[] args)
-         {
-             Student[] students = new Student[]
-             {
-                 new Student ("Alice", 17, 95) ,
-                 new Student ( "Bob",  18,  88 ),
-                 new Student ( "Charlie" ,16,  95 ),
-                 new Student (  "David", 17,   82 )
-             };
-             Teacher[] teachers = new Teacher[]
-             {
-                 new Teacher ( "Mr. Smith","Math", 1 ),
-                 new Teacher ( "Ms. Johnson", "English", 5 ),
-                 new Teacher ( "Mr. Brown",  "History", 2 ),
-                 new Teacher ( "Mrs. White", "Science", 7)
-             };
-             Console.WriteLine("Students with highest grades");
-             foreach (var i in students)
-             {
-                 if (i.Grade > 90 ) Console.WriteLine($"{i.Name} - {i.Grade}");
-             }
-             Console.WriteLine("teachers with less than 2 years experience");
-             foreach (var i in teachers)
-             {
-                 if (i.YearsOfExperience < 2 ) Console.WriteLine($"{i.Name} - {i.YearsOfExperience}");
-             }
-         }
-     }
-     /*--------------------------------------------------------------------------------------------------------*/
-     //Task 9: Car Rental System
-     /*Task: Create a Car class with:
-         Model, Year, IsRented.
-         Methods RentCar() and ReturnCar().
-         In Main(), create a fleet of 5 cars, let users rent and return cars.
-         Prevent renting an already rented car.*/
-
-     public class Car
-     {
-         public string Model;
-         private int Year;
-         private bool IsRented;
-
-
-         public Car(string model, int year, bool isRented = false)
-         {
-             this.Model = model;
-             this.Year = year;
-             this.IsRented = isRented;
-         }
-
-         public bool RentCar()
-         {
-             if (this.IsRented)
-             {
-                 Console.WriteLine("This model is alredy taken");
-                 return false;
-             };
-             this.IsRented = true;
-             return true;
-         }
-         
-         public bool ReturnCar()
-         {
-             this.IsRented = false;
-             return true;
-         }
-     }
-
-     class Program
-     {
-         static void Main(string[] args)
-         {
-             Car[] cars = new Car[]
-             {
-                 new Car("BMW", 2014),
-                 new Car("Audi", 2013),
-                 new Car("Merceders", 2012),
-                 new Car("Porche", 2022),
-                 new Car("Lexus", 2020)
-             };
-             
-             while (true)
-             {
-                 Console.WriteLine("input the model:");
-                 string input = Console.ReadLine();
-                 bool carFound = false;
-                 
-                 foreach (var car in cars)
-                 {
-                     if (car.Model.Equals(input, StringComparison.OrdinalIgnoreCase))
-                     {
-                         carFound = true;
-                         if (car.RentCar())
-                         {
-                             Console.WriteLine($"Enjoy your {car.Model}, you have 10 days!");
-                         }
-                         break;
-                     }
-                 }
-
-                 if (!carFound)
-                 {
-                     Console.WriteLine("We don't have this model.");
-                 }
-                 
-                 Console.WriteLine("Would you like to borrow another one: '1' - yes, '0' - no");
-                 int userAnswer = Convert.ToInt32(Console.ReadLine());
-                 if (userAnswer <= 0 || userAnswer > 1) break;
-             }
-             
-         }
-     }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Course course = new Course("Math", Teachers.Ms_Grigorian, 100);
+            course.ShowCourseDetails();
+        }
+    }
