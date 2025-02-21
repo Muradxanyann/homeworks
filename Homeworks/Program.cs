@@ -1,73 +1,62 @@
 ﻿using System;
+using System.Threading.Channels;
 
-//Task 1: Student Management System
-/*Task: Create a class Student with:
-Fields: name, studentID, and gradeLevel.
-    Add a method ShowStudentInfo() to display the details.
-    In Main(), create a few Student objects and display their details.*/
-class Student
+//Task 1: Basic Calculator
+/*Task: Write a program with methods for basic math operations:
+Add(int a, int b), Subtract(int a, int b), Multiply(int a, int b), Divide(int a, int b)
+Read 2 numbers from user input, read operation code and then display the result.
+    Close the program if received X from the user.
+    Use recursion to make the calculator run until it gets the X.*/
+
+public static class MyMethods
 {
-    public string Name { get; set; }
-    public int StudentId { get; }
-    public int GradeLevel { get; private set; }
-
-    public Student(string name, int studentId, int gradeLevel)
+    public static int Add(int a, int b)
     {
-        this.Name= name;
-        this.StudentId = studentId;
-        this.GradeLevel = gradeLevel;
+        return a + b;
     }
-
-    public void ShowStudentInfo()
+    public static int Subtract(int a, int b)
     {
-        Console.WriteLine($"Name: {Name}\nStudent ID: {StudentId}\nGrade Level: {GradeLevel}\n");
+        return a - b;
     }
-}
-
-class Programm
-{
-    static void Main(string[] args)
+    public static long Multiply(int a, int b)
     {
-        Student[] students = new Student[]
+        return (long)a * b;
+    }
+    public static int Devide(int a, int b, out double fraction)
+    {
+        if (b == 0)
         {
-            new Student("Armen", 1, 1),
-            new Student("Artak", 2, 2),
-            new Student("Karen", 3, 7),
-            new Student("Serj", 4, 9),
-        };
-        foreach (var student in students)
-        {
-            student.ShowStudentInfo();
+            Console.WriteLine("Error, can`t devide number to 0");
+            fraction = 0;
+            return 0;
         }
-        
+        fraction = a % b;
+        return a / b;
     }
-}
-/*-------------------------------------------------------------------------------------------------------*/
-
-//Task 2: Flight Reservation System
-/*Task: Create a class FlightTicket with:
-Fields: passengerName, flightNumber, and seatNumber.
-    Add a constructor to initialize these fields.
-    In Main(), create a few tickets and print the details.*/
     
-class FlightTicket
+}
+
+static class Calculator
 {
-    public string PassengerName { get; set; }
-    public int FlightNumber { get; private set; }
-    public int SeatNumber { get; private set; }
-
-
-    public FlightTicket(string passengerName, int flightNumber, int seatNumber)
+    public static long BasicCalcualtor(int num1, int num2, char userOperand)
     {
-        PassengerName = passengerName;
-        FlightNumber = flightNumber;
-        SeatNumber = seatNumber;
-    }
-
-    public void TicketDetail()
-    {
-        Console.WriteLine($"Passenger Name: {PassengerName}\nFlight Number: {FlightNumber}\nSeatNumber: {SeatNumber}");
-        Console.WriteLine(new string('-', 30));
+        switch (userOperand)
+        {
+            case '+':
+                return MyMethods.Add(num1, num2);
+            case '-':
+                return MyMethods.Subtract(num1, num2);
+            case '*':
+                return MyMethods.Multiply(num1, num2);
+            case '/':
+                double remainder;
+                int result = MyMethods.Devide(num1, num2, out remainder);
+                Console.WriteLine($"Quotient: {result}, Remainder: {remainder}");
+                return result;
+            default:
+                Console.WriteLine("Invalid operator");
+                return 0;
+        }
     }
 }
 
@@ -75,306 +64,316 @@ class Program
 {
     static void Main(string[] args)
     {
-        FlightTicket[] tickets = 
+        char userAnwer = ' ';
+        while (char.ToUpper(userAnwer) != 'X')
         {
-            new FlightTicket("Tom", 111, 1),
-            new FlightTicket("Jerry", 112, 2),
-            new FlightTicket("Rick", 113, 3),
-        };
-        foreach (var ticket in tickets)
-        {
-            ticket.TicketDetail();
+            Console.WriteLine("Please input numbers");
+            string userX = Console.ReadLine();
+            string userY = Console.ReadLine();
+
+            if (!int.TryParse(userX, out int num1) || (!int.TryParse(userY, out int num2)))
+            {
+                Console.WriteLine("Parsing faled");
+                return;
+            }
+
+            Console.WriteLine("Please choose the operand:  \'+' \'-' \'*' \'/'");
+            char operand = Convert.ToChar(Console.ReadLine());
+            long result = Calculator.BasicCalcualtor(num1, num2, operand);
+            Console.WriteLine($"Result: {result}");
+            Console.WriteLine("If you want to use this calculator, enter any key, except /'X'");
+            userAnwer = Console.ReadKey(true).KeyChar;
         }
     }
-    
 }
-/*-------------------------------------------------------------------------------------------------------*/
-//Task 3: File Download Simulation
-/*Task: Create a class FileDownload with:
-Constructor that prints "Download started".
-    Add a destructor that prints "Download completed".
-    In Main(), create an object inside a method and observe when the destructor is called.*/
-    
-class FileDownload
-{
-    public FileDownload()
-    {
-        Console.WriteLine("Download started");
-    }
-    
-    ~FileDownload(){
-        Console.WriteLine("Download completed");
-    }
-}
-
+/*-------------------------------------------------------------------------------------------*/
+//Task 2:  Swap Two Numbers
+/* Task: Write a program to swap 2 numbers:
+Write a method to swap the values of two integers.
+    Use ref in method parameters.
+    Read 2 numbers from user input and validate the input values.   */
 class Program
 {
-    static void CreateAndDestroy()
+    public static void ChangeValues(ref int a, ref int b)
     {
-        FileDownload file = new FileDownload();
+        int temp = a;
+        a = b;
+        b = temp;
     }
-
     static void Main(string[] args)
     {
-        CreateAndDestroy();
+        Console.WriteLine("Please input numbers");
+        string userX = Console.ReadLine();
+        string userY = Console.ReadLine();
+
+        if (!int.TryParse(userX, out int a) || (!int.TryParse(userY, out int b)))
+        {
+            Console.WriteLine("Parsing faled");
+            return;
+        }
+
+        Console.WriteLine($"Before swapping a - {a}, b -{b}");
+        ChangeValues(ref a, ref b);
+        Console.WriteLine($"After swapping a - {a}, b -{b}");
     }
 }
-/*-------------------------------------------------------------------------------------------------------*/
-//Task 4: Weather Forecast System
-    /*  Task: Create a class WeatherReport with:
-    Fields: temperature, humidity, and weatherCondition.
-    In Main(), create an array of WeatherReport objects for different cities and display the reports.*/
-
-    class WeatherReport
+/*-------------------------------------------------------------------------------------------*/
+//Task3: Write a program to find max from input numbers array:
+/* Write a method to find the maximum value from an array of input numbers.
+    Use ref and params in method parameters.
+    Read numbers from user input.  */
+class Program
+{
+    public static int MaxValue(params int[]array)
     {
-        public double Temperature { get;  set; }
-        public int Humidity { get;  set; }
-        public string WeatherCondition { get;  set; }
-
-        public void WeatherInfo()
+        int max = array[0];
+        for (int i = 1; i < array.Length; i++)
         {
-            Console.WriteLine($"Tempriture: {Temperature}\nHumidity: {Humidity}\nWeatherCondition: {WeatherCondition}");
-            Console.WriteLine(new string('-', 30));
+            if (array[i] > max) max = array[i];
         }
+
+        return max;
     }
+    static void Main(string[] args)
+    {
+        int[] array = new int[5];
+        for (int i = 0; i < array.Length; i++)
+        {
+            Console.WriteLine($"Please input value for element {i + 1}");
+            array[i] = Convert.ToInt32(Console.ReadLine());
+        }
+
+        int max = MaxValue(array);
+        Console.WriteLine($"Max value in array is {max}");
+    }
+}
+/*-------------------------------------------------------------------------------------------*/
+    //Task 4: Convert Temperature
+/*Task: Write a program for temperature conversion:
+Write a method that converts Celsius to Fahrenheit and Kelvin.
+    Use ref and out in method parameters.
+    Call it with a user-provided Celsius value.*/
 
     class Program
     {
+        public static double ConvertToFahrenheit(double Celsius, out double kelvin)
+        {
+            kelvin = Celsius + 273.15;
+            return Celsius * 1.8 + 32;
+        }
         static void Main(string[] args)
         {
-            WeatherReport[] London =
+            string input = Console.ReadLine();
+            if (!Double.TryParse(input, out double celsius))
             {
-                new WeatherReport { Temperature = 15.5, Humidity = 70, WeatherCondition = "Cloudy" },
-                new WeatherReport { Temperature = 22.3, Humidity = 60, WeatherCondition = "Sunny" },
-                new WeatherReport { Temperature = 10.8, Humidity = 80, WeatherCondition = "Rainy" }
-            };
-            foreach (var weather in London)
-            {
-                weather.WeatherInfo();
+                Console.WriteLine("Parsing failed");
+                return;
             }
-           
+            double fahrenheit = ConvertToFahrenheit(celsius, out double kelvin);
+            Console.WriteLine($"{celsius}C to fahreniheit {fahrenheit} to kelvin {kelvin}");
         }    
     }
-/*-------------------------------------------------------------------------------------------------------*/
-//Task 5: Smartwatch Step Counter
-    /*Task: Create a class Smartwatch with:
-    Fields: ownerName and stepCount.
-        Add methods AddSteps(int steps) and ShowSteps().
-        In Main(), create a smartwatch object, simulate adding steps, and display the total..*/
-
-    using System.Net.NetworkInformation;
-
-    class Smartwatch
-    {
-        public string OwnerName { get; set; }
-        public int StepCount { get;  set; }
-
-        public void AddSteps(int steps)
-        {
-            StepCount += steps;
-        }
-
-        public void ShowSteps()
-        {
-            Console.WriteLine($"Steps: {StepCount}");    
-        }
-    }
-
+    /*-------------------------------------------------------------------------------------------*/
+    //Task 5: Calculate Area and Perimeter
+    /*Task: Write a program for circle basic calculations:
+    Write a method that calculates area and perimeter of a circle from radius.
+        Use ref and out in method parameters.
+        Call it with a user-provided radius value.*/
     class Program
     {
+        public static double AreaCalc(double radius, out double parimeter)
+        {
+            const double pi = 3.14;
+            double area = pi * (radius * radius);
+            parimeter = 2 * pi * radius;
+            return area;
+        }
+
         static void Main(string[] args)
         {
-            Smartwatch person1 = new Smartwatch();
-            //person1.AddSteps(100);
-            person1.ShowSteps();
+            string input = Console.ReadLine();
+            if (!Double.TryParse(input, out double radius))
+            {
+                Console.WriteLine("Parsing failed");
+                return;
+            }
+
+            double area = AreaCalc(radius, out double parimeter);
+            Console.WriteLine($"Radius: {radius} - Area: {area :F2} - Parimeter: {parimeter:F2}");
         }
     }
-/*-------------------------------------------------------------------------------------------------------*/
-    //Task 6: Movie Rating System
-    /*Task: Create a class Movie with:
-    Private field _rating.
-        Add a property Rating that:
-    Allows setting a value between 1 and 5.
-        Prints a warning if an invalid value is entered.
-        In Main(), test the property with valid and invalid values.*/
-
-    class Movie
+    /*-------------------------------------------------------------------------------------------*/
+    //Task 6: Sum of Any Numbers
+    /*Task: Write a program for numbers sum calculation:
+    Write a method that calculates the sum of the numbers in an array.
+        Use params in method parameters.
+        Read numbers from user input.*/
+    class Program
     {
-        private int _rating;
-
-        public int Rating
+        public static int Sum(params int[]array)
         {
-            get { return _rating; }
-            set
+            int sum = 0;
+            for (int i = 0; i < array.Length; i++)
             {
-                if (value < 1 || value > 5)
+                sum += array[i];
+            }
+
+            return sum;
+        }
+        static void Main(string[] args)
+        {
+            int[] array = new int[5];
+            for (int i = 0; i < array.Length; i++)
+            {
+                Console.WriteLine($"Please input value for element {i + 1}");
+                array[i] = Convert.ToInt32(Console.ReadLine());
+            }
+
+            int sum = Sum(array);
+            Console.WriteLine($"Sum value in array is {sum}");
+        }
+    }
+
+    /*-------------------------------------------------------------------------------------------*/
+    //Task 7: Solve Quadratic Equation
+    /*Task: Write a program for solving Quadratic Equation:
+    Write a method that calculates two roots using the quadratic formula: x = [-b ± √(b2 - 4ac)]/2a.
+        Use ref and out in method parameters.
+        Call it with a user-provided a, b and c values.*/
+     class Program
+    {
+        public static bool SolveQuadratic(double a, double b, double c, out double root1, out double root2)
+        {
+            root1 = 0;
+            root2 = 0;
+            double discriminant = b * b - 4 * a * c;
+            if (a == 0)
+            {
+                Console.WriteLine("A cannot be 0).");
+                return false;
+            }
+
+            if (discriminant < 0)
+            {
+                Console.WriteLine("No roots .");
+                return false;
+            }
+
+            double sqrtDisc = Math.Sqrt(discriminant);
+
+            root1 = (-b + sqrtDisc) / (2 * a);
+            root2 = (-b - sqrtDisc) / (2 * a);
+
+            return true;
+        }
+
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Enter coefficients for the quadratic equation (ax^2 + bx + c = 0):");
+            string inputA = Console.ReadLine();
+            string inputB = Console.ReadLine();
+            string inputC = Console.ReadLine();
+
+            if (!double.TryParse(inputA, out double a) ||
+                !double.TryParse(inputB, out double b) ||
+                !double.TryParse(inputC, out double c))
+            {
+                Console.WriteLine("Invalid input");
+                return;
+            }
+
+            if (SolveQuadratic(a, b, c, out double root1, out double root2))
+            {
+                Console.WriteLine($"Root 1: {root1:F2}");
+                Console.WriteLine($"Root 2: {root2:F2}");
+            }
+        }
+    }
+    /*-------------------------------------------------------------------------------------------*/
+    //Task 8: Fibonacci Sequence
+    /*Task: Write a program that returns n-th number from Fibonacci Sequence:
+    Write a recursive method that returns the n-th number in Fibonacci Sequence.
+        Call it with a user-provided n.*/
+    class Program
+    {
+        public static int Fib(int n)
+        {
+            if (n == 0) return 0;
+            if (n == 1) return 1;
+            return Fib(n - 1) + Fib(n - 2);
+        }
+        static void Main(string[] args)
+        {
+            string input = Console.ReadLine();
+            if (!int.TryParse(input, out int n))
+            {
+                Console.WriteLine("Parsing failed");
+                return;
+            }
+
+            int fibNum = Fib(n);
+            Console.WriteLine(fibNum);
+        }
+    }
+    /*-------------------------------------------------------------------------------------------*/
+   // Task 9: Time Converter
+    /*Task: Write a program that converts seconds to time:
+    Write a method that converts totalSeconds into hours, minutes, and seconds.
+        Use ref and out in method parameters.
+        Call it with a user-provided totalSeconds.*/
+    class Program
+    {
+        public static void  totalSeconds(int totalSec, out int hours, out int minutes, out int seconds)
+        {
+            hours = totalSec / 3600;
+            minutes = (totalSec % 3600) / 60;
+            seconds = minutes % 60;
+            Console.WriteLine($"{totalSec} seconds - {hours} hours, {minutes} minutes and {seconds} seconds");
+        }
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Please input seconds and this program will convert to hours, minutes, seconds ");
+            string input = Console.ReadLine();
+
+            if (!int.TryParse(input, out int totalSec))
+            {
+                Console.WriteLine("Parsing faled");
+                return;
+            }
+            
+            totalSeconds(totalSec, out int hours, out int minutes, out int seconds);
+
+        }
+    }
+    /*-------------------------------------------------------------------------------------------*/
+    //Task 10:  Find the Longest Word
+    /*Task: Write a program to find the longest word from the input words array:
+    Write a method that returns the longest word from the input words array.
+        Use params in method parameters.
+        Call it with a user-provided words array.*/
+    class Program
+    {
+        public static string LongestWord(params string[] str)
+        {
+            string longestWord = str[0];
+            int maxLength = str[0].Length;
+            for (int i = 1; i < str.Length; i++)
+            {
+                if (maxLength < str[i].Length)
                 {
-                    Console.WriteLine("Invalid rating, choose from 1 to 5");
-                    return;
+                    maxLength = str[i].Length;
+                    longestWord = str[i];
                 }
-                _rating = value;
             }
+            return longestWord;
         }
-
-        public Movie(int rating)
-        {
-            Rating = rating;
-        }
-
-        public void ShowRating()
-        {
-            Console.WriteLine($"Rating: {Rating}");
-        }
-    }
-
-    class Program
-    {
         static void Main(string[] args)
         {
-            Movie movie1 = new Movie(7);
-            Movie movie2 = new Movie(3);
-            movie1.ShowRating();
-            movie2.ShowRating();
-        }
-    }
-/*-------------------------------------------------------------------------------------------------------*/
-
-    //Task 7: Fitness Tracker System
-    /*Task: Create a class WorkoutSession with:
-    Fields: exerciseType and durationInMinutes.
-        Add a method ShowWorkoutDetails().
-        In Main(), create and display different workout sessions.*/
-
-    class WorkoutSession
-    {
-        public string ExerciseType{get; set;}
-        public int DurationInMinutes{get; set;}
-
-        public WorkoutSession(string exerciseType, int durationInMinutes)
-        {
-            ExerciseType = exerciseType;
-            DurationInMinutes = durationInMinutes;
-        }
-
-        public void ShowWorkoutDetails()
-        {
-            Console.WriteLine($"Exercise Type : {ExerciseType}\nDurition: {DurationInMinutes} minutes\n");
+            string someString = Console.ReadLine();
+            string[] array = someString.Split(' ');
+            string longestWord = LongestWord(array);
+            Console.WriteLine($"Longest word is {longestWord}");
         }
     }
 
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            WorkoutSession[] sessions =
-            {
-                new WorkoutSession("Bench press", 10),
-                new WorkoutSession("Biceps curl", 10),
-            };
-            foreach (var sesion in sessions)
-            {
-                sesion.ShowWorkoutDetails();
-            }
-        }
-    }
-    /*-------------------------------------------------------------------------------------------------------*/
-    //Task 8: E-Commerce Product System
-    /*Task: Create a class Product with:
-    Fields name, price, and stockQuantity.
-        Add a constructor that uses this to differentiate between parameters and fields.
-        In Main(), create a product and display its details.*/
-
-    class Product
-    {
-        private int _stockQuatity;
-        public string Name { get; set; }
-        public double Price { get; set; }
-
-        public int StockQuantity
-        {
-            get { return _stockQuatity; }
-            set
-            {
-                if (value < 0)
-                {
-                    Console.WriteLine("In stock value can`t be negative, using default value 0");
-                    this._stockQuatity = 0;
-                    return;
-                }
-                _stockQuatity = value;
-            }
-        }
-
-        public Product(string name, double price, int stockQuantity)
-        {
-            this.Name = name;
-            this.Price = price;
-            this.StockQuantity = stockQuantity;
-        }
-
-        public void ShowDetails()
-        {
-            Console.WriteLine($"Product name: {Name}\nPrice: {Price}\nIn stock: {StockQuantity}");
-            Console.WriteLine(new string('-', 30));
-        }
-    }
-
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            Product product1 = new Product("Potato", 200, 10);
-            Product product2 = new Product("Orange", 200, -12);
-            product1.ShowDetails();
-            product2.ShowDetails();
-        }
-    }
-    /*-------------------------------------------------------------------------------------------------------*/
-    //Task 9: Game Character System
-    /*Task: Create a partial class.
-    Create a partial class Character in two separate files:
-    One part contains fields characterName and level.
-        The other contains a method ShowCharacterInfo().
-        In Main(), create a Character object and call ShowCharacterInfo().*/
-    /*-------------------------------------------------------------------------------------------------------*/
-    //Task 10: Simulating Course Enrollment
-    /*Task: Create a class Course with:
-    Fields: courseName, instructor, and maxStudents.
-        Use a constructor to initialize these fields.
-        Add a method ShowCourseDetails().
-        In Main(), create a few courses and display their details.*/
-
-    enum Teachers
-    {
-        Ms_Grigorian = 1,
-        Mr_Smith,
-        Mr_Hakobian
-    }
-    class Course
-    {
-        public string CourseName { get; set; }
-        public Teachers MyTeachers { get; set; }
-        public int MaxStudents { get; set; }
-
-        public Course(string courseName, Teachers myTeachers/*1 - 3 only*/, int maxStudents)
-        {
-            CourseName = courseName;
-            MyTeachers = myTeachers;
-            MaxStudents = maxStudents;
-        }
-
-        public void ShowCourseDetails()
-        {
-            Console.WriteLine($"Course name: {CourseName}\nTeacher: {MyTeachers}\nMax Students: {MaxStudents}");
-            Console.WriteLine(new string('-', 30));
-        }
-    }
-
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            Course course = new Course("Math", Teachers.Ms_Grigorian, 100);
-            course.ShowCourseDetails();
-        }
-    }
+    
