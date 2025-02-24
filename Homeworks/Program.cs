@@ -29,6 +29,13 @@ namespace forClasses
                 this.Quantity += addCount;
             }
             
+            public void AddMultipleItems(params int[] quantities)
+            {
+                foreach (var item in quantities)
+                {
+                    this.Quantity += item;
+                }
+            }
             public void SellItem(int removeCount)
             {
                 if (this.Quantity - removeCount < 0)
