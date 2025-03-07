@@ -1,296 +1,26 @@
-﻿using System;
-using System.Globalization;
+﻿/* Task 1: Custom List Implementation
+Task: Create a custom list based on an array with dynamic size adjustment.
+Implement an indexer for element access, a Length property, and methods for adding 
+and removing elements. Ensure proper validation when accessing indices. */
+
+using System.CodeDom.Compiler;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.Contracts;
+using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
 
-/* Task: Create a Person class with the following:
-FirstName and LastName as auto-properties.
-A read-only property FullName that is computed only once when accessed for the first time (lazy initialization).
-Ensure FullName is stored internally and does not change if FirstName or LastName are modified. */
-
- class Person
+class Person
 {
-    public string Name{get;set;}
-    public string LastName{get;set;}
+    private static int _id = 0;
+    public int Id {get;}
+    public  string Name { get; set;}
 
-    private readonly Lazy<string> _fullName; 
-    public string FullName => _fullName.Value;
-    
-    public Person (string name, string lastName) 
+    public Person()
     {
-        Name = name;
-        LastName = lastName;
-        _fullName = new Lazy<string> (() => $"{Name} {LastName}");
+        Name = "Unknown";
+        Id = ++_id;
     }
-
-    public void ShowInfo()
-    {
-        System.Console.WriteLine($"Name: {Name}\nLastname: {LastName}");
-    }
-}
-
-class Program
-{
-    static void Main (string[] args)
-    {
-        Person person = new Person("Artak", "Galstyan");
-        person.ShowInfo();
-        System.Console.WriteLine(person.FullName);
-    }
-} 
-
-/*-------------------------------------------------------------------------------------------*/
-
-/* Task 2:  Property with Validation and Default Value
-Task: Create a Product class that contains:
-A Price property that:
-Cannot be negative.
-If set to a negative value, defaults to 0.
-A Stock property that:
-Cannot be negative.
-If set to a negative value, defaults to 10. */
-
- class Product 
-{
-    private double _price;
-    private int _stock;
-
-    public double Price
-    {
-        get { return _price; }
-        set
-        {
-            if(value < 0)
-            {
-                System.Console.WriteLine("Cant set negative value, using default value 0");
-            }
-            _price = value;
-        }
-    }
-
-    public int Stock
-    {
-        get { return _stock; }
-        set
-        {
-            if(value < 0)
-            {
-                System.Console.WriteLine("Cant set negative value, using default value 10");
-                _price = 10;
-            }
-            _price = value;
-        }
-    }
-} 
-
-/* Task 3:  Computed Property with String Formatting
-Task: Create a TimePeriod class with:
-A property TotalSeconds (int).
-A computed property FormattedTime that returns "HH:mm:ss" format. */
-
- class TimePeriod 
-{
-    private int _totalSeconds;
-
-    public int TotalSeconds
-    {
-        get { return _totalSeconds; }
-        set
-        {
-            if (value < 0)
-            {
-                throw new ArgumentOutOfRangeException("Seconds cant be negative");
-            }
-            _totalSeconds = value;
-        }
-    }
-
-    public string FormattedTime
-    {
-        get { return FormattedTimeCreator(_totalSeconds);}
-    }
-
-    public TimePeriod(int totalSeconds)
-    {
-        TotalSeconds = totalSeconds;
-    }
-
-    public string FormattedTimeCreator(int totalSec)
-    {
-        int hours = totalSec / 3600;
-        int temp  = totalSec % 3600;
-        int minutes = temp / 60;
-        int seconds = temp % 60;
-
-        return $"{hours :D2}:{minutes :D2}:{seconds:D2}";  
-    }
-}
-
-class Program
-{
-    static void Main(string[] args)
-    {
-        TimePeriod time = new TimePeriod(3601);
-        System.Console.WriteLine(time.FormattedTime);
-
-    }
-} 
-/* ------------------------------------------------------------------------------- */
-/* Task 4:  Student Grades
-Task: Create a Students class that stores grades:
-Implement an indexer where:
-The key is a subject name.
-The value is a grade.
-If the subject doesn’t exist, return -1.
-Use only arrays. */
-
-class Student
-{
-    public string Name { get; set; }
-    private string[] subjects;
-    private int[] grades;
-
-    public int this[string subjectName]
-    {
-        get 
-        {
-            for (int i = 0; i < subjects.Length; i++)    
-            {
-                if (subjectName == subjects[i])
-                {
-                    return grades[i];
-                }
-            }
-            return -1;
-        }
-        set
-        {
-            for (int i = 0; i < subjects.Length; i++)
-            {
-                if (subjects[i] == subjectName)
-                {
-                    grades[i] = value;
-                    return;
-                }
-            }
-
-            
-            for (int i = 0; i < subjects.Length; i++)
-            {
-                if (subjects[i] == null) 
-                {
-                    subjects[i] = subjectName;
-                    grades[i] = value;
-                    return;
-                }
-            }
-        }
-    }
-    
-
-    public Student (string studentName, int countOfSubjects)
-    {
-        Name = studentName;
-        subjects = new string[countOfSubjects];
-        grades = new int[countOfSubjects];
-    }
-
-    public void ShowStudentInfo()
-    {
-        Console.WriteLine($"Student: {Name}");
-        for (int i = 0; i < subjects.Length; i++)
-        {
-            Console.WriteLine($"Subject: {subjects[i]} | Grade: {grades[i]}");
-        }
-    }
-
-    
-}
-class Program 
-{
-    static void Main (string[] args)
-    {
-        Student student1 = new Student("Ashot", 3);
-
-        student1["Math"] = 85;
-        student1["Physics"] = 90;
-        student1["History"] = 78;
-
-        student1.ShowStudentInfo();
-        
-    }
-}
-
-/* -------------------------------------------------------------------------------- */
-/* Task 5:  Multi-Parameter Indexer for 3D Space
-Task: Create a Grid3D class that:
-Stores values in a 3D space (x, y, z coordinates).
-Uses an indexer with three integer parameters.
-Throws an error if any index is out of bounds. */
-
- class Grid3D
-{
-    public int X{ get; set; }
-    public int Y{ get; set; }
-
-    public int Z{ get; set; }
-    private int[,,] _cube;
-
-    public int[,,]Cube => _cube;
-    
-
-    public Grid3D(int x, int y, int z)
-    {
-        X = x;
-        Y = y;
-        Z = z;
-        _cube = new int[X, Y, Z ];
-    }
-
-    public int this[int indexX, int indexY, int indexZ]
-    {
-        get 
-        {
-            if (indexX < 0 || indexX >= X || indexY < 0 || indexY >= Y || indexZ < 0 || indexZ >= Z)
-            {
-                throw new ArgumentOutOfRangeException("The coordinates must be within the range 0 <= index < size.");
-            }
-            return _cube[indexX, indexY, indexZ];
-        }
-
-        set
-        {
-            if (indexX < 0 || indexX >= X || indexY < 0 || indexY >= Y || indexZ < 0 || indexZ >= Z)
-            {
-                throw new ArgumentOutOfRangeException("The coordinates must be within the range 0 <= index < size.");
-            }
-            _cube[indexX, indexY, indexZ] = value;
-        }
-    }   
-
-}
-
-class Program 
-{
-    static void Main(string[] args)
-    {
-        Grid3D cube1 = new Grid3D(2,2,2);
-        cube1[1,1,1] = 43;
-        System.Console.WriteLine(cube1[1, 1,1]);
-    }
-} 
-
-/* ------------------------------------------------------------------------------ */
-/* Task: Create a ContactArray class that:
-Stores contacts as Person objects.
-Allows searching contacts by ID or Name using two separate indexers.
-Returns null if no contact is found */
-
- class Person
-{
-    public string Name { get; set; }
-    private static int _id  = 0;
-    public int Id { get ;}
     public Person(string name)
     {
         Name = name;
@@ -299,32 +29,363 @@ Returns null if no contact is found */
 
     public void ShowPersonInfo()
     {
-        System.Console.WriteLine($"Name: {Name}\nId: {Id}");
+        System.Console.WriteLine($"Name: {Name} || Id: {Id}");
+    }
+}
+
+class CustomerList 
+{
+    private Person[] _people;
+    private int _size;
+    public int Length => _size; 
+
+    public CustomerList (int capacity = 3)
+    {
+        _people = new Person[capacity];
+        _size = 0;
+    } 
+
+    public Person this[int index]
+    {
+        get
+        {
+            if (index < 0 || index >= Length)
+            {
+                throw new IndexOutOfRangeException($"Index must be beetwen 0 - {Length - 1}");
+            }
+            return _people[index];
+        }
+        set
+        {
+            if (index < 0 || index >= Length)
+            {
+                throw new IndexOutOfRangeException($"Setting Index must be beetwen 0 - {Length - 1}");
+            }
+            _people[index] = value;
+        }
+    }
+
+    public  void ShowListInfo()
+    {
+        
+        for (int i = 0; i < Length; i++)
+        {
+            
+            _people[i]?.ShowPersonInfo();
+        }
+    }
+
+
+    public void Resize()
+    {
+        int newSize = _people.Length * 2;
+        Person[] NewArray= new Person[newSize];
+        Array.Copy(_people, NewArray, _size);
+        _people = NewArray;
+    }
+
+    public void Add (Person person)
+    {
+        if (_size == _people.Length)
+        {
+            Resize();
+        }
+        _people[_size++] = person;
+    }
+
+    public void RemoveAt(int index)
+    {
+        if (index < 0 || index >= _size)
+            throw new IndexOutOfRangeException($"Index must be between 0 and {_size - 1}");
+
+        for (int i = index; i < Length - 1; i++)
+        {
+            _people[i] = _people[i + 1];
+        }
+        _people[--_size] = default!;
+    }
+}
+
+class Program 
+{
+    static void Main(string[] args)
+    {
+        CustomerList list  = new CustomList(5);
+        list.Add(new Person("Ashot"));
+        list.ShowListInfo();
+    }
+}
+
+/* Task 2:  Multilevel Secure Data Storage
+Task: Design a secure storage system where data is accessed using indexers.
+ Implement different access levels for reading and writing data.
+ The system should enforce proper access control based on the caller’s role. */
+
+        enum UserRole
+        {
+            Admin,
+            User,
+            Guest
+        }
+        class Data
+        {
+            public string FileName { get; set; }
+            public int Size { get; set; }
+
+            public Data (string fileName, int size)
+            {
+                FileName = fileName;
+                Size = size;
+            }
+        }
+        
+        class SecureSystem
+        {
+            private Data[] _data;
+            private  UserRole[] userRoles = new UserRole[3];
+
+            public SecureSystem(int size) 
+            {
+                _data = new Data[size];
+            }
+
+            
+
+    public Data this[UserRole role, int index]
+    {
+        get
+        {
+            if (index < 0 || index >= _data.Length)
+                throw new IndexOutOfRangeException("Index out of range!");
+
+            if (_data[index] == null)
+                throw new NullReferenceException("Data is undefined!");
+
+            if (role < userRoles[index])
+                throw new UnauthorizedAccessException("Not enough role!");
+
+            return _data[index];
+        }
+        set
+        {
+            if (role != UserRole.Admin)
+                throw new UnauthorizedAccessException("Only admin can change value !");
+
+            if (index < 0 || index >= _data.Length)
+                throw new IndexOutOfRangeException("index out of range!");
+
+            _data[index] = value;
+        }
+    }
+ }
+
+class Program 
+{
+    static void Main(string[] args)
+    {
+        SecureSystem storage = new SecureSystem(4);
+        storage[UserRole.Admin, 0] = new Data("name", 10);
+        //storage[UserRole.User, 0] = new Data("name", 10);
+    }
+}
+/* Task 4:  Advanced Banking System with Transactions
+Task: Design a banking system where accounts support deposit, withdrawal, and balance transfer.
+Implement static utilities for currency conversion. 
+Use ref parameters to modify balances and out parameters to return transaction details. */
+
+ class BankSystem
+{
+    public string HolderName{ get; private set; }
+    public decimal Balance { get; private set; }
+
+    public BankSystem(string name, decimal balance = 0)
+    {
+        HolderName = name;
+        Balance = balance;
+    }
+
+    public void Deposit(decimal amount)
+    {
+        this.Balance += amount;
+        ShowBalance();
+    }
+
+    public void Withdraw(decimal amount)
+    {
+        if (amount > this.Balance)
+        {
+            throw new ArgumentException("Not enoguh resources");
+        }
+        this.Balance -= amount;
+        ShowBalance();
+    }
+
+    public void Transfer(ref BankSystem obj, decimal amount,  out string transactionDetails, char currency = '#')
+    {
+        if (amount <= 0)
+        {
+            throw new ArgumentException("Amount must be greater than zero");
+        }
+        switch (currency)
+        {
+            case '#':
+                if (amount > this.Balance)
+                {
+                     throw new ArgumentException("Not enoguh resources for transfer");
+                }
+                this.Balance -= amount;
+                obj.Balance += amount;
+                transactionDetails =$"Transferred {amount:F2} AMD from {HolderName} to {obj.HolderName}";
+                break;
+        
+        case '$':
+            if (amount * 390 > this.Balance)
+            {
+                throw new ArgumentException("Not enoguh resources for transfer");
+            }
+            this.Balance -= amount * 390;
+            obj.Balance += amount;
+            transactionDetails = $"Transferred {amount:F2} USD ({amount * 390:F2} AMD) from {HolderName} to {obj.HolderName}";
+                   
+            break;
+        case '&':
+            if (amount * 420 > this.Balance)
+            {
+                throw new ArgumentException("Not enoguh resources for transfer");
+            }
+            this.Balance -= amount * 420;
+            obj.Balance += amount;
+            transactionDetails = $"Transferred {amount:F2} EUR ({amount * 420:F2} AMD) from {HolderName} to {obj.HolderName}";
+            break;
+        
+        default:
+        {
+            transactionDetails = default!;
+            throw new ArgumentException("invalid currency");
+        }
+        }
+            
+
+        System.Console.WriteLine("Succesful transfer!");
+        ShowBalance();
+    }
+
+    public void ShowBalance()
+    {
+        Console.WriteLine($"Balance == {this.Balance :F2} AMD");
+    }
+
+    public static decimal  ConvertToUsd (decimal amountInDram)
+    {
+        return amountInDram / 390;
+    }
+
+    public static decimal  ConvertToEuro (decimal amountInDram)
+    {
+        return amountInDram / 420;
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        System.Console.WriteLine("Please choose currency for tranfer: # - for AMD, $ - for Dollar, & - for euro");
+        BankSystem obj1 = new BankSystem("Armen");
+        string transactionDetails;
+        obj1.Deposit(10000);
+        BankSystem obj2 = new BankSystem("Artur");
+        obj2.Deposit(10000);
+        obj1.Transfer(ref obj2, 10, out transactionDetails, '$');
+        System.Console.WriteLine(transactionDetails);
+    }
+} 
+
+/* Task 5: Create a cache system that stores objects(documents) using an indexer. 
+Implement automatic cleanup of stale objects based on time or memory constraints.
+ The system should use a static member to track total cached objects. */
+
+ class Document 
+{
+    public int MemoryUse{ get; private set; }
+    public int TimePeriod{ get; private set; }
+    
+    public Document (int memoryUse, int timePeriod)
+    {
+        MemoryUse = memoryUse;
+        TimePeriod = timePeriod;
+    }
+
+    public void ShowDocumentInfo()
+    {
+        System.Console.WriteLine($"Document memory using: {MemoryUse} || Execution time period: {TimePeriod}");
     }
 
 }
 
-class Contacts 
+class Cache
 {
-    Person[] contacts;
-    public Contacts(int contactsCount)
-    {
-        contacts = new Person[contactsCount];
-    }
+    private Document[] _documents;
+    public static int _cachedFiles;
+    public int Capacity {get; private set; }
 
-    public Person this[int index]
+
+    public Cache (int capacity = 5) 
+    {
+        if (capacity < 0) throw new ArgumentOutOfRangeException("Capacity must be positive");
+        Capacity = capacity;
+        _documents = new Document[Capacity];
+        _cachedFiles++;
+    } 
+
+    public Document this[int index]
     {
         get 
         {
-            if (index < 0 || index >= contacts.Length)
-                throw new ArgumentOutOfRangeException($"index must be between 0 to {contacts.Length - 1} ");
-            return contacts[index];
+            if (index < 0 || index >= Capacity)
+            {
+                throw new ArgumentOutOfRangeException($"index must be in range 0 - {Capacity - 1 }");
+            }
+            return _documents[index];
         }
-        set 
+
+        set
         {
-            if (index < 0 || index >= contacts.Length)
-                throw new ArgumentOutOfRangeException($"index must be between 0 to {contacts.Length - 1} ");
-            contacts[index] = value;
+            if (index < 0 || index >= Capacity)
+            {
+                throw new ArgumentOutOfRangeException($"index must be in range 0 - {Capacity - 1 }");
+            }
+            _documents[index] = value;
+        }
+
+    }
+
+    public void AllDocumentInfo()
+    {
+        foreach (var doc in _documents)
+        {
+            doc?.ShowDocumentInfo();
+        }
+    }
+    public void CleanCache()
+    {
+        bool cleaned = false;
+        for (int i = 0; i < Capacity; i++)
+        {
+            if (_documents[i] != null && (_documents[i].MemoryUse > 100 || _documents[i].TimePeriod > 1000))
+            {
+                _documents[i] = default!;
+                cleaned = true;
+            }
+        }
+        
+        if (cleaned)
+        {
+            Console.WriteLine("Cache cleaned successfully.");
+        }
+        else
+        {
+            Console.WriteLine("No documents matched cleanup criteria.");
         }
     }
 }
@@ -333,12 +394,36 @@ class Program
 {
     static void Main(string[] args)
     {
-        Contacts contacts = new Contacts(3);
-
-        contacts[0] = new Person("Gugo");
-        contacts[1] = new Person("Davo");
-        contacts[2] = new Person("Armen");
-        contacts[0].ShowPersonInfo();
-        contacts[5].ShowPersonInfo();
+        Cache file1 = new Cache(5);
+        file1[0] = new Document(100, 1200);
+        file1.AllDocumentInfo();
     }
 } 
+
+/* Task 6: Custom Notification System
+Task: Create a notification system where different users can register messages 
+dynamically and retrieve them later. */
+
+ class User
+{
+    public string Name { get; private set; }
+
+    public User (string name) => Name = name;
+
+    public async Task<string> GetDataAsync(string notification, int seconds)
+    {
+        await Task.Delay(seconds * 1000); 
+        return notification;
+    }
+}
+
+class Program 
+{
+    static async Task Main(string[] args)
+    {
+        User user = new User ("Ashot");
+        string result = await user.GetDataAsync("You need to have a dinner", 10);
+        System.Console.WriteLine(result);
+    }
+} 
+
