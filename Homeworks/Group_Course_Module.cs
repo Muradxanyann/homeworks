@@ -150,7 +150,7 @@ class AI : Course
     
 }
 
-/*class Program 
+class Program 
 {
     public static void Main (string[] args)
     {
@@ -255,6 +255,6 @@ class AI : Course
         string name = sb.ToString();
         System.Console.WriteLine($"The most famous course is {name} with {maxStudent} students");
     }
-}*/
+}
 
 

@@ -10,12 +10,12 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("Homeworks")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("String and List Extentions")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+edb454d45617d06c3cff1b3aa86c0412c1409284")]
-[assembly: System.Reflection.AssemblyProductAttribute("Homeworks")]
-[assembly: System.Reflection.AssemblyTitleAttribute("Homeworks")]
+[assembly: System.Reflection.AssemblyProductAttribute("String and List Extentions")]
+[assembly: System.Reflection.AssemblyTitleAttribute("String and List Extentions")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 
 // Создано классом WriteCodeFragment MSBuild.
