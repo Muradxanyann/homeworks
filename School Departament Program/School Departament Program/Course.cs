@@ -1,98 +1,77 @@
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Text;
-
-class Student
+public enum CourseCategory
 {
-    private string _name;
+    WebDevelopment,
+    CSharpDevelopment,
+    CPlusPlusDevelopment
+}
 
-    private static int _id;
-    private string _email;
+public enum CourseType
+{
+    FrontEnd,
+    BackEnd,
+    FullStack,
+    GameDev,
+    GUI,
+    GameDevUnreal
+}
 
-    private string _phoneNumber;
 
-    private string _parentPhoneNumber;
 
-    private List<Course> _courses = new List<Course>();
-    
-    public string Name 
+class Course 
+{
+    public string Name { get; private set; }
+    public int Duration => CalculateCourseDuration();
+    public double Price => CalculateCoursePrice();
+
+    private List <Module>  _modules = new List<Module>();
+
+    public int MaxCountOfStudents { get; private set; }
+
+    public int CurrentCountOfStudents {get; set; }
+
+
+    public Course (string name,  int maxCountOfStudents, int currentCountOfStudents = 0)
     {
-        get { return _name; }
-        set
-        {
-            if (string.IsNullOrEmpty(value) || value.Any(char.IsDigit) || value.Length < 2)
-                throw new ArgumentException("Invalid input");
-            _name = value;
-        }
-    }
-    public int Id {get; private set;}
-    public string Email 
-    {
-        get { return _email; }
-        set 
-        {
-            if (value.EndsWith("@mail.com") || value.EndsWith("@gmail.com") || value.EndsWith("@mail.ru") || value.EndsWith("@yahoo.com") || value.EndsWith("@outlook.com"))
-            {
-                _email = value;
-                return;
-            }
-                
-            throw new ArgumentException("Invalid email");
-        }
-    }
+        if (string.IsNullOrEmpty (name) ||  maxCountOfStudents <= 0)
+            throw new ArgumentException ("invalid parameters for this object");
 
-    public string PhoneNumber 
-    {
-        get { return _phoneNumber; }
-        set
-        {
-            if (!(value.StartsWith("+374") && value.Length == 12) && !(value.StartsWith("0") && value.Length == 9))
-                throw new ArgumentException("Invalid Number"); 
-            _phoneNumber = value;
-        }
-    }
+        if (currentCountOfStudents > maxCountOfStudents)
+            throw new ArgumentException("Current count of students cannot exceed the maximum count.");
 
-    public string ParentPhoneNumber 
-    {
-        get { return _parentPhoneNumber; }
-        set
-        {
-            if (!(value.StartsWith("+374") && value.Length == 12) && !(value.StartsWith("0") && value.Length == 9))
-                throw new ArgumentException("Invalid Number");
-            _parentPhoneNumber = value;
-        }
-    }
-
-    public Student(string name, string email, string phoneNumber, string parentPhoneNumber)
-    {
         Name = name;
-        Email  = email;
-        PhoneNumber = phoneNumber;
-        ParentPhoneNumber = parentPhoneNumber;
-        Id = ++_id;
+        MaxCountOfStudents = maxCountOfStudents;
+    }  
+
+    private int CalculateCourseDuration()
+    {
+        return _modules.Sum(module => module.Duration);
+    }
+    private double CalculateCoursePrice()
+    {
+        double totalPrice = _modules.Sum(module => module.Price);
+        return totalPrice * 0.8; 
     }
 
-     public void ShowStudentInfo()
+    public void ShowCourseInfo ()
     {
         Console.WriteLine($"""
-            Name: {Name}
-            Id: {Id}
-            Email: {Email}
-            Phone Number: {PhoneNumber}
-            Parent Phone Number: {ParentPhoneNumber}
-            Courses: {ShowCourses()}
-            """);
+                               Course Name: {Name}
+                               Duration: {CalculateCourseDuration()} month
+                               Price: {CalculateCoursePrice()} AMD
+                               Modules: {ShowModules()}
+                               MaxCountOfStudents: {MaxCountOfStudents}
+                               Current count of students: {CurrentCountOfStudents}
+                           """);
     }
 
-    private string ShowCourses()
+    private string ShowModules()
     {
-        return _courses.Count > 0 ? string.Join(", ", _courses.Select(c => c.Name)) : "No courses";
+        return _modules.Count > 0 ? string.Join(", ", _modules.Select(c => c.Type)) : "No modules";
     }
-    public void AddCourse(Course course)
+
+    public void AddModule(Module module)
     {
-        _courses.Add(course);
-        course.CurrentCountOfStudents++;
+        _modules.Add(module);
     }
-    
 
 }
